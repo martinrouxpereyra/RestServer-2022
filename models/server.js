@@ -1,6 +1,15 @@
+/////////////////////////////////////////////////////////
+//Importaciones
+////////////////////////////////////////////////////////
 const express = require('express');
 const cors = require('cors');
 
+const { bdConnection } = require('../database/config');
+////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////
+//clase del servidor
+////////////////////////////////////////////////////////
 class Server {
 
     constructor() {
@@ -8,12 +17,21 @@ class Server {
         this.port = process.env.PORT;
         this.usuariosPath = '/api/usuarios';
 
+        //llamar conectar a base de datos
+        this.conectarDB();
+
         // Middlewares
         this.middlewares();
 
         // Rutas de mi aplicación
         this.routes();
     }
+
+    //conectar a base de datos
+    async conectarDB(){
+        await bdConnection();
+    }
+
 
     middlewares() {
 
@@ -39,8 +57,8 @@ class Server {
     }
 
 }
+////////////////////////////////////////////////////////
 
 
-
-
+//Exportacion
 module.exports = Server;
